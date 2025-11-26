@@ -1,0 +1,147 @@
+{
+  "GoldPack": {
+    "price": 5000,
+    "cards": 3,
+    "rarity_weights": {
+      "Common": 50,
+      "Rare": 30,
+      "Epic": 12,
+      "Legendary": 6,
+      "Mythic": 2
+    }
+  },
+
+  "ElitePack": {
+    "price": 15000,
+    "cards": 4,
+    "rarity_weights": {
+      "Common": 30,
+      "Rare": 35,
+      "Epic": 20,
+      "Legendary": 10,
+      "Mythic": 5
+    }
+  },
+
+  "SpecialPOTMPack": {
+    "price": 25000,
+    "cards": 3,
+    "rarity_weights": {
+      "Rare": 40,
+      "Epic": 30,
+      "Legendary": 20,
+      "Mythic": 10
+    }
+  }
+}
+RARITIES = [
+    "Common", "Rare", "Epic", "Legendary", "Mythic",
+    "Hero", "Icon", "PrimeIcon", "Flashback", "POTM", "MOTM", "TOTY", "OTW", "RTTF"
+]
+You sent
+DROP_RARITY_WEIGHTS = {
+    "Common": 60,
+    "Rare": 20,
+    "Epic": 10,
+    "Legendary": 5,
+    "Mythic": 3,
+    "Hero": 1.5,
+    "Icon": 0.9,
+    "PrimeIcon": 0.5,
+    "Flashback": 1,
+    "TOTY": 0.3,
+    "POTM": 0.7,
+    "MOTM": 0.8,
+    "OTW": 1,
+    "RTTF": 1
+}
+{
+  "StarterPack": {
+    "price": 0,
+    "cards": 3,
+    "rarity_weights": {
+      "Common": 70,
+      "Rare": 25,
+      "Epic": 5
+    }
+  },
+  "GoldPack": {
+    "price": 1500,
+    "cards": 3,
+    "rarity_weights": {
+      "Common": 55,
+      "Rare": 30,
+      "Epic": 10,
+      "Legendary": 4,
+      "Mythic": 1
+    }
+  },
+  "RareGoldPack": {
+    "price": 3500,
+    "cards": 4,
+    "rarity_weights": {
+      "Rare": 50,
+      "Epic": 25,
+      "Legendary": 15,
+      "Mythic": 5,
+      "Flashback": 3,
+      "Hero": 2
+    }
+  },
+  "FlashbackPack": {
+    "price": 8000,
+    "cards": 3,
+    "rarity_weights": {
+      "Flashback": 65,
+      "Epic": 20,
+      "Legendary": 10,
+      "Mythic": 5
+    }
+  },
+  "HeroPack": {
+    "price": 12000,
+    "cards": 2,
+    "rarity_weights": {
+      "Hero": 70,
+      "Legendary": 20,
+      "Epic": 10
+    }
+  },
+  "IconPack": {
+    "price": 25000,
+    "cards": 1,
+    "rarity_weights": {
+      "Icon": 60,
+      "PrimeIcon": 40
+    }
+  },
+  "TOTYPack": {
+    "price": 40000,
+    "cards": 1,
+    "rarity_weights": {
+      "TOTY": 100
+    }
+  },
+  "POTMPack": {
+    "price": 9000,
+    "cards": 2,
+    "rarity_weights": {
+      "POTM": 80,
+      "Rare": 20
+    }
+  },
+  "PromoPack": {
+    "price": 15000,
+    "cards": 5,
+    "rarity_weights": {
+      "Rare": 30,
+      "Epic": 25,
+      "Legendary": 20,
+      "Mythic": 10,
+      "Hero": 5,
+      "Flashback": 5,
+      "Icon": 3,
+      "PrimeIcon": 2
+    }
+  }
+}
