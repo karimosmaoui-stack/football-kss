@@ -1,0 +1,8 @@
+"USER_ID": {
+  "coins": 1200,
+  "cards": ["card1", "card2"],
+  "pending_reward": {
+    "coins": 500,
+    "pack": "Basic"
+  }
+}
