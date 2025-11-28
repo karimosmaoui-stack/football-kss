@@ -1,3 +1,21 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 import json
@@ -212,61 +230,9 @@ async def inspect(ctx, card_id=None):
 
     await ctx.send(embed=embed)
 
-@bot.command()
-async def sellcard(ctx, card_id: str, price: int):
-    user_id = str(ctx.author.id)
-    users = load_users()
-
-    if card_id not in users["users"][user_id]["cards"]:
-        await ctx.send("❌ Ma3andekch el card.")
-        return
-
-    market = load_market()
-    market["listings"].append({
-        "seller": user_id,
-        "card_id": card_id,
-        "price": price
-    })
-    save_market(market)
-
-    users["users"][user_id]["cards"].remove(card_id)
-    save_users(users)
-
-    await ctx.send(f"💸 Card listed for **{price} coins**.")
 
 
-@bot.command()
-async def buycard(ctx, index: int):
-    user_id = str(ctx.author.id)
-    users = load_users()
-    market = load_market()
 
-    if index >= len(market["listings"]):
-        await ctx.send("❌ Index ghalet.")
-        return
-
-    item = market["listings"][index]
-
-    price = item["price"]
-
-    if users["users"][user_id]["coins"] < price:
-        await ctx.send("❌ coins mkafi4.")
-        return
-
-    # pay seller
-    users["users"][item["seller"]]["coins"] += price
-    users["users"][user_id]["coins"] -= price
-
-    # give card
-    users["users"][user_id]["cards"].append(item["card_id"])
-
-    # remove from market
-    market["listings"].pop(index)
-
-    save_users(users)
-    save_market(market)
-
-    await ctx.send("✅ Card bought successfully!")
 
 
 def load_cards():
@@ -557,8 +523,7 @@ def set_drop_time(uid):
     d["last_drops"][uid] = int(time.time())
     safe_write(DROP_FILE, d)
 
-def can_drop(uid):
-    return (time.time() - get_last_drop(uid)) >= DROP_COOLDOWN
+
 
 @bot.command()
 async def profile(ctx):
@@ -1535,53 +1500,6 @@ async def card(ctx, card_id: str):
 
     await ctx.send(embed=embed)
 
-@bot.command()
-async def trade(ctx, member: discord.Member, offer):
-    trades = read_trades()
-    uid = str(ctx.author.id)
-    target = str(member.id)
-
-    if uid == target:
-        return await ctx.send("❌ ما تنجمش تتاجر مع روحك.")
-
-    # Check if player exists
-    users = read_json(USERS_FILE)
-    cards = read_json(CARDS_FILE)
-
-    # Offer = coin or card
-    offer_type = None
-    offer_value = None
-
-    if offer.endswith("coins"):
-        amount = int(offer.replace("coins", ""))
-        if users[uid]["coins"] < amount:
-            return await ctx.send("❌ ما عندكش كفاية فلوس.")
-        offer_type = "coins"
-        offer_value = amount
-
-    else:
-        card_id = offer
-        if card_id not in cards or cards[card_id]["owner"] != uid:
-            return await ctx.send("❌ البطاقة غير موجودة أو ما هيّش ملكك.")
-        offer_type = "card"
-        offer_value = card_id
-
-    trade_id = f"trade_{int(time.time())}"
-    trades[trade_id] = {
-        "from": uid,
-        "to": target,
-        "offer_type": offer_type,
-        "offer_value": offer_value,
-        "status": "pending"
-    }
-
-    write_trades(trades)
-
-    await ctx.send(
-        f"✅ تم إرسال عرض تجارة إلى {member.mention}\n"
-        f"اكتب: !accept {trade_id} للقبول أو !decline {trade_id} للرفض."
-    )
-
 PACKS_FILE = "packs.json"
 CARDS_FILE = "cards.json"
 USER_CARDS_FILE = "user_cards.json"
@@ -1686,11 +1604,42 @@ PACK_NAMES = {
     "legendary": "Legendary Pack"
 }
 
+# في main.py
+import discord
+from flask import Flask
+from threading import Thread
+import os
 
+
+
+@bot.event
+async def on_ready():
+    print(f'Logged in as {bot.user}')
+
+# Flask Web Server (عشان Render)
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+@app.route('/health')
+def health():
+    return "OK", 200
+
+def run_flask():
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
+
+if __name__ == '_main_':
+    # شغّل Flask في thread منفصل
+    Thread(target=run_flask).start()
+    # شغّل البوت
+    bot.run(os.environ.get('discord_token'))
 
 
 
 # ===========================
 #   RUN BOT
 # ===========================
-bot.run("MTQzNDU0ODE1NTUxNjU4ODAzMg.GnHr6M.Uj9kNfbIm13vUx_W2bzwscxLdxMop-CXSPBCxg")
+bot.run('MTQzNDU0ODE1NTUxNjU4ODAzMg.GYIaY6.9_-ZGGX6XPt2BADpzwdEoQ3vvbJbHOY0thivW4')
