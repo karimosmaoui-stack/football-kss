@@ -1635,11 +1635,13 @@ if __name__ == '_main_':
     # شغّل Flask في thread منفصل
     Thread(target=run_flask).start()
     # شغّل البوت
-    bot.run(os.environ.get('discord_token'))
+    bot.run(os.environ.get('DISCORD_TOKEN'))
 
 
 
 # ===========================
 #   RUN BOT
 # ===========================
-bot.run('MTQzNDU0ODE1NTUxNjU4ODAzMg.GYIaY6.9_-ZGGX6XPt2BADpzwdEoQ3vvbJbHOY0thivW4')
+load_dotenv()
+TOKEN = os.getenv("DISCORD_TOKEN")
+bot.run(TOKEN)
